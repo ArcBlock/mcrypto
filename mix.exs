@@ -15,7 +15,17 @@ defmodule Mcrypto.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      dialyzer: [ignore_warnings: ".dialyzer_ignore.exs", plt_add_apps: []]
+      dialyzer: [ignore_warnings: ".dialyzer_ignore.exs", plt_add_apps: []],
+      description: description(),
+      package: package(),
+      # Docs
+      name: "Mcrypto",
+      source_url: "https://github.com/arcblock/mcrypto",
+      homepage_url: "https://github.com/arcblock/mcrypto",
+      docs: [
+        main: "Mcrypto",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -43,6 +53,31 @@ defmodule Mcrypto.MixProject do
       {:ex_doc, "~> 0.19.0", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.10", only: [:test]},
       {:pre_commit_hook, "~> 1.2", only: [:dev, :test], runtime: false}
+    ]
+  end
+
+  defp description do
+    """
+    Multiple crypto support.
+    """
+  end
+
+  defp package do
+    [
+      files: [
+        "config",
+        "lib",
+        "mix.exs",
+        "README*",
+        "version",
+        ".elixir_version"
+      ],
+      licenses: ["Apache 2.0"],
+      maintainers: ["tyr.chen@gmail.com"],
+      links: %{
+        "GitHub" => "https://github.com/arcblock/mcrypto",
+        "Docs" => "https://hexdocs.pm/mcrypto"
+      }
     ]
   end
 end

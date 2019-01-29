@@ -19,12 +19,10 @@ deploy:
   - provider: releases
     skip_cleanup: true
     api_key:
-      secure:
+      secure: HKp8uZ4O5p0sCD59BFk5y/fcmW1GlSIh0e4vnmQWQRN+l16jveCU7Ch4Jzg+uFPkwEa/X7yUqzhKlJs+5jajWqRoB1ZMxN/Xjtg7Nqvph7E4wfNYPSvRjhMmKj4MfP1T6LWC2wUFu1/k/qg88Zb5JBaG77PP0mOtDoF2iQWixp/LoD9IB8L3QtsFCJb3sUET4x5ggj9HAnqW7zlUWQkjKP3fy6OKN4gkbgTK8iHNTNOWkC8BUtYYyjnEhYouuA0DgveoqjMP3BdusqOgvTrZchbBOc6HNGFsqd9D7qvJvQgxWxoMkgENDqrB7q4eZqpMJHZivVdMQZ6zGDBHnKH0moBngZUYzxq3zfWavAiPn2eiIouEhX2Hv9FxrFMEVarmgagRZ5MXd/aba2cIezSMMdgSocNazS6EVUMqFagDqU/1/XEXZ1Dm/NPDYEucrqEGDXgGhjAnASRRcpSNBSGBsseyr8jTyysx4k+pmej8ujhyF42f1Tgvxpe+qDSJZd+BO6w+IN9ULmBGMbyq260hwDD5QDLZPxsqd09DmC9W1/x2Jr4/QIoh2aVzlTVzw2lPLrmjDqaJsBqbmEIN8giRXLAMMo2ED/MdV7/FhHnBN1c14bAcK4PjRdSRjmiwM60HQ76haRG4fKXwoI9xaCamybcllpSTnErfZ2kYE+ioMn8=
     on:
       repo: ArcBlock/mcrypto
       branch: master
 env:
-  global:
-  - secure:
   matrix:
   - MIX_ENV=test

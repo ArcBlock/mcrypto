@@ -1,8 +1,22 @@
 
 
-travis-init:
+travis-init: dep
 	@echo "Initialize software required for travis (normally ubuntu software)"
 
+travis-deploy:
+	@echo "Deploy the software by travis"
+
+
+precommit: pre-build build post-build test
+
+travis: precommit
+
+
+pre-build: dep
+	@echo "Running scripts before the build..."
+
+post-build:
+	@echo "Running scripts after the build is done..."
 
 build:
 	@echo "Building the software..."
