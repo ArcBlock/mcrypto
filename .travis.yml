@@ -1,0 +1,30 @@
+language: elixir
+dist: xenial
+elixir: 1.7.4
+otp_release: 21.1.1
+branches:
+  only:
+  - master
+install:
+- mix local.hex --force
+- mix local.rebar --force
+before_script: make travis-init
+script: make travis
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: make travis-deploy
+    on:
+      branch: master
+  - provider: releases
+    skip_cleanup: true
+    api_key:
+      secure:
+    on:
+      repo: ArcBlock/mcrypto
+      branch: master
+env:
+  global:
+  - secure:
+  matrix:
+  - MIX_ENV=test
