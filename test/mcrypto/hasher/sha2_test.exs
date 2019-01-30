@@ -2,20 +2,22 @@ defmodule McryptoTest.Sha2 do
   use ExUnit.Case
   alias Mcrypto.Hasher.Sha2
 
+  @message Base.decode16!("68656C6C6F")
+
   test "sha2 hash shall work as expected" do
     assert Mcrypto.hash(%Sha2{}, "") ===
              <<93, 246, 224, 226, 118, 19, 89, 211, 10, 130, 117, 5, 142, 41, 159, 204, 3, 129,
                83, 69, 69, 245, 92, 244, 62, 65, 152, 63, 93, 76, 148, 86>>
 
-    assert Mcrypto.hash(%Sha2{round: 1}, "hello") ===
+    assert Mcrypto.hash(%Sha2{round: 1}, @message) ===
              <<44, 242, 77, 186, 95, 176, 163, 14, 38, 232, 59, 42, 197, 185, 226, 158, 27, 22,
                30, 92, 31, 167, 66, 94, 115, 4, 51, 98, 147, 139, 152, 36>>
 
-    assert Mcrypto.hash(%Sha2{}, "hello") ===
+    assert Mcrypto.hash(%Sha2{}, @message) ===
              <<149, 149, 201, 223, 144, 7, 81, 72, 235, 6, 134, 3, 101, 223, 51, 88, 75, 117, 191,
                247, 130, 165, 16, 198, 205, 72, 131, 164, 25, 131, 61, 80>>
 
-    assert Mcrypto.hash(%Sha2{size: 384}, "hello") ===
+    assert Mcrypto.hash(%Sha2{size: 384}, @message) ===
              <<212, 125, 137, 255, 213, 7, 30, 130, 96, 205, 111, 202, 26, 70, 104, 96, 88, 113,
                175, 95, 190, 219, 237, 115, 117, 161, 17, 124, 140, 20, 200, 45, 60, 234, 194, 52,
                77, 209, 224, 48, 53, 174, 28, 94, 117, 92, 245, 242>>
