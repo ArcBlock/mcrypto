@@ -46,6 +46,7 @@ defmodule Mcrypto.MixProject do
       {:libdecaf, "~> 1.0"},
       {:libsecp256k1, "~> 0.1.3"},
       {:typed_struct, "~> 0.1.4"},
+      {:blake2, "~> 1.0"},
 
       # dev and test
       {:credo, "~> 1.0.0", only: [:dev, :test]},
