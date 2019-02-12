@@ -1,10 +1,11 @@
-
+VERSION=$(strip $(shell cat version))
 
 travis-init: dep
 	@echo "Initialize software required for travis (normally ubuntu software)"
 
 travis-deploy:
 	@echo "Deploy the software by travis"
+	@make release
 
 
 precommit: pre-build build post-build test
@@ -41,5 +42,7 @@ run:
 dialyzer:
 	@echo "Running dialyzer..."
 	@mix dialyzer
+
+include .makefiles/*.mk
 
 .PHONY: build init travis-init install dep test dialyzer doc precommit travis clean watch run
