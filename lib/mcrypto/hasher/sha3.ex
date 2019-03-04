@@ -25,12 +25,16 @@ defimpl Mcrypto.Hasher, for: Mcrypto.Hasher.Sha3 do
   """
   [224, 256, 384, 512]
   |> Enum.map(fn size ->
-    fun = :"sha3_#{size}"
+    fun_init = :"sha3_#{size}_init"
+    fun_update = :"sha3_#{size}_update"
+    fun_final = :"sha3_#{size}_final"
 
     def hash(%{size: unquote(size), round: 0}, final), do: final
 
     def hash(%{size: unquote(size), round: round}, data) do
-      hash = apply(:libdecaf, unquote(fun), [data])
+      sponge0 = apply(:libdecaf, unquote(fun_init), [])
+      sponge1 = apply(:libdecaf, unquote(fun_update), [sponge0, data])
+      hash = apply(:libdecaf, unquote(fun_final), [sponge1])
       hash(%{size: unquote(size), round: round - 1}, hash)
     end
   end)
