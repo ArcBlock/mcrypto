@@ -1,12 +1,10 @@
 defmodule Mcrypto.MixProject do
   use Mix.Project
-  @top Path.join(File.cwd!(), ".")
 
+  @top Path.join(File.cwd!(), ".")
   @version @top |> Path.join("version") |> File.read!() |> String.trim()
-  @elixir_version @top
-                  |> Path.join(".elixir_version")
-                  |> File.read!()
-                  |> String.trim()
+  @elixir_version @top |> Path.join(".elixir_version") |> File.read!() |> String.trim()
+
   def project do
     [
       app: :mcrypto,
@@ -35,9 +33,7 @@ defmodule Mcrypto.MixProject do
     ]
   end
 
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(:integration), do: elixirc_paths(:test)
-  defp elixirc_paths(:dev), do: ["lib", "test/support"]
+  defp elixirc_paths(env) when env in [:dev, :test, :integration], do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
   defp deps do
