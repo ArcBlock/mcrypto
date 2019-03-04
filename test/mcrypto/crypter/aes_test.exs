@@ -10,7 +10,7 @@ defmodule McryptoTest.AES do
     assert plaintext === Mcrypto.decrypt(crypter, ciphertext, key, iv)
   end
 
-  test "encrypt with aes_cbc128 should be able to decrypt" do
+  test "encrypt with encoder nil should be able to decrypt" do
     crypter = %AES{encoder: nil}
     plaintext = "hello world"
     key = "abcd1234"
