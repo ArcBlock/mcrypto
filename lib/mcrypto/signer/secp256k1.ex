@@ -28,14 +28,11 @@ defimpl Mcrypto.Signer, for: Mcrypto.Signer.Secp256k1 do
   end
 
   def sign!(_signer, data, sk) do
-    {:ok, signature} = :libsecp256k1.ecdsa_sign(data, sk, :default, <<>>)
+    {:ok, signature, _} = :libsecp256k1.ecdsa_sign_compact(data, sk, :default, <<>>)
     signature
   end
 
   def verify(_signer, data, signature, pk) do
-    case :libsecp256k1.ecdsa_verify(data, signature, pk) do
-      :ok -> true
-      _ -> false
-    end
+    :ok == :libsecp256k1.ecdsa_verify_compact(data, signature, pk)
   end
 end
