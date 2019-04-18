@@ -24,11 +24,21 @@ defimpl Mcrypto.Signer, for: Mcrypto.Signer.Secp256k1 do
     :not_support
   end
 
-  def sign!(_signer, data, sk) when byte_size(data) == 32 do
-    :crypto.sign(:ecdsa, :sha256, {:digest, data}, [sk, :secp256k1])
+  def sign!(_signer, data, sk) do
+    case byte_size(data) do
+      32 -> :crypto.sign(:ecdsa, :sha256, {:digest, data}, [sk, :secp256k1])
+      48 -> :crypto.sign(:ecdsa, :sha384, {:digest, data}, [sk, :secp256k1])
+      64 -> :crypto.sign(:ecdsa, :sha512, {:digest, data}, [sk, :secp256k1])
+      _ -> raise("Sign data with size #{byte_size(data)} is not supported.")
+    end
   end
 
-  def verify(_signer, data, signature, pk) when byte_size(data) == 32 do
-    :crypto.verify(:ecdsa, :sha256, {:digest, data}, signature, [pk, :secp256k1])
+  def verify(_signer, data, signature, pk) do
+    case byte_size(data) do
+      32 -> :crypto.verify(:ecdsa, :sha256, {:digest, data}, signature, [pk, :secp256k1])
+      48 -> :crypto.verify(:ecdsa, :sha384, {:digest, data}, signature, [pk, :secp256k1])
+      64 -> :crypto.verify(:ecdsa, :sha512, {:digest, data}, signature, [pk, :secp256k1])
+      _ -> raise("Verify data with size #{byte_size(data)} is not supported.")
+    end
   end
 end
