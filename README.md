@@ -1,4 +1,4 @@
-# Mcrypto
+![mcrypto](https://www.arcblock.io/.netlify/functions/badge/?text=Mcrypto)
 
 Multiple crypto functionalities support.
 
