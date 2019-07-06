@@ -1,6 +1,6 @@
 defmodule Mcrypto.Signer.Ed25519 do
   @moduledoc """
-  support ED25519 algo
+  Support ED25519 algorithm.
   """
 
   use TypedStruct

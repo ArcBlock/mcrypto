@@ -1,6 +1,6 @@
 defmodule Mcrypto.Signer.Secp256k1 do
   @moduledoc """
-  support Secp256k1 algo
+  Support Secp256k1 algorithm.
   """
 
   use TypedStruct
@@ -16,26 +16,29 @@ defmodule Mcrypto.Signer.Secp256k1 do
 end
 
 defimpl Mcrypto.Signer, for: Mcrypto.Signer.Secp256k1 do
-  def keypair(signer) do
-    sk = :crypto.strong_rand_bytes(32)
-    pk = sk_to_pk(signer, sk)
-    {pk, sk}
+  def keypair(_signer) do
+    :crypto.generate_key(:ecdh, :secp256k1)
   end
 
-  def sk_to_pk(_signer, sk) do
-    {:ok, pk} = :libsecp256k1.ec_pubkey_create(sk, :uncompressed)
-    pk
+  def sk_to_pk(_signer, _sk) do
+    :not_support
   end
 
   def sign!(_signer, data, sk) do
-    {:ok, signature} = :libsecp256k1.ecdsa_sign(data, sk, :default, <<>>)
-    signature
+    case byte_size(data) do
+      32 -> :crypto.sign(:ecdsa, :sha256, {:digest, data}, [sk, :secp256k1])
+      48 -> :crypto.sign(:ecdsa, :sha384, {:digest, data}, [sk, :secp256k1])
+      64 -> :crypto.sign(:ecdsa, :sha512, {:digest, data}, [sk, :secp256k1])
+      _ -> raise("Sign data with size #{byte_size(data)} is not supported.")
+    end
   end
 
   def verify(_signer, data, signature, pk) do
-    case :libsecp256k1.ecdsa_verify(data, signature, pk) do
-      :ok -> true
-      _ -> false
+    case byte_size(data) do
+      32 -> :crypto.verify(:ecdsa, :sha256, {:digest, data}, signature, [pk, :secp256k1])
+      48 -> :crypto.verify(:ecdsa, :sha384, {:digest, data}, signature, [pk, :secp256k1])
+      64 -> :crypto.verify(:ecdsa, :sha512, {:digest, data}, signature, [pk, :secp256k1])
+      _ -> raise("Verify data with size #{byte_size(data)} is not supported.")
     end
   end
 end
